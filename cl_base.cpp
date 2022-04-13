@@ -21,11 +21,12 @@ string cl_base::get_name() {
 
 void cl_base::print_tree()
 {
-    cout<< this->get_name()<<" ";
+    cout<< this->get_name();
+    if(!this->children.size()==0) cout<<"  ";
     for (int i = 0; i < children.size(); i++)
     {
         cout<<children[i]->get_name();
-        if(i!=children.size()-1) cout<<" ";
+        if(i!=children.size()-1) cout<<"  ";
     }
     //cout<<endl;
     for(int i = 0; i < children.size(); i++)
