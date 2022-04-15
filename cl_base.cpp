@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 using namespace std;
-cl_base::cl_base(cl_base *parent, string name) {
+cl_base::cl_base(cl_base *parent, string name){
     this->parent = parent;
     this->name = name;
     if(parent!= nullptr) parent->children.push_back(this);

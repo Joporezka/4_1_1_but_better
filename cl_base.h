@@ -13,7 +13,7 @@ class cl_base{
     cl_base* parent;
 public:
     vector <cl_base*> children;
-    cl_base(cl_base* parent, string name);
+    cl_base(cl_base* parent, string name="application");
     void set_name(string name);
     string get_name();
     void print_tree();

@@ -6,11 +6,11 @@
 using namespace std;
 
 
-cl_application::cl_application(cl_base *parent):
+/*cl_application::cl_application(cl_base *parent):
     cl_base(parent,"application")
 {
     //static cl_base* application_pointer = this;
-}
+}*/
 
 void cl_application::bild_tree_objects() {
     string name2;
