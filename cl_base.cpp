@@ -80,14 +80,14 @@ cl_base* cl_base::get_object_by_name(string name) //получение объе�
     }
     for (size_t i = 0; i <children.size(); i++) //поиск рекурсивно в наследниках наследников
     {
-        if ((children[i]->get_object_by_name(name))->get_name() ==
-            name)
-        {
-            //cout<<"Найден объект "<<(children[i]->get_object_by_name(name))->get_name()<<endl;
-            return (children[i]->get_object_by_name(name));
+        if (children[i]->parent!= nullptr){
+            cl_base* temp = children[i]->get_object_by_name(name);
+            if (temp!= nullptr && temp->get_name() ==name){
+                return temp;
+            }
         }
     }
-    return new cl_base(nullptr, "temp");
+    return nullptr;
 }
 
 void cl_base::set_parent(cl_base* parent) {
@@ -99,7 +99,10 @@ cl_base *cl_base::get_parent() {
 }
 void cl_base::set_readiness(int data){
     cl_base* ptr= this->parent;
-    if(ptr == nullptr) this->readiness=data;
+    if(ptr == nullptr){
+        this->readiness=data;
+        return;
+    }
     while(ptr!=nullptr){
         if(ptr->readiness==0){
             this->readiness=0;

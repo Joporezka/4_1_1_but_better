@@ -31,14 +31,15 @@ void cl_application::bild_tree_objects() {
         else if(cl_num==6) child6* ch = new child6(this->get_object_by_name(parent),child);
     }
 
-//    while(true){
-//        cin>>child>>readiness1;
-//        if(readiness1==-100)break;
-//        //this->get_object_by_name(child)->set_readiness(readiness1);
-//    }
-    this->set_readiness(-3);
-    cout<<this->get_name()<<endl;
-    cout<<this->get_object_by_name("app_root")->get_name()<<endl;
+    while(true) {
+        cin>>child>>readiness1;
+        if(child=="eof") break;
+        cl_base *ptr = get_object_by_name(child);
+        ptr->set_readiness(readiness1);
+    }
+//    this->set_readiness(-3);
+//    cout<<this->get_name()<<endl;
+//    cout<<this->get_object_by_name("app_root")->get_name()<<endl;
 }
 
 int cl_application::exec_app() {
