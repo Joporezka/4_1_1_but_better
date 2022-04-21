@@ -1,35 +1,48 @@
 #include "cl_base.h"
-#include "child.h"
+#include "child2.h"
+#include "child3.h"
+#include "child4.h"
+#include "child5.h"
+#include "child6.h"
 #include "cl_application.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
 
-/*cl_application::cl_application(cl_base *parent):
-    cl_base(parent,"application")
-{
-    //static cl_base* application_pointer = this;
-}*/
-
 void cl_application::bild_tree_objects() {
-    string name2;
-    string name1;
-    cin >> name1;
-    child* child1 = new child(this, name1); //создание головного объекта
+    string parentI;
+    string childI;
+    int cl_num,readiness;
+    cin >> parentI;
+    //создание головного объекта
+    this->set_name(parentI);
+
     while (true)
     {
-        cin >> name1 >> name2; //ввод наследуемого класса и наследующего
-        if (name1 == name2) //условие выхода
-        {
-            return;
-        }
-        child* child2 = new child(this->get_object_by_name(name1),name2); //создание дочернего класса
+        cin >> parentI;
+        if(parentI=="endtree") break;
+        cin >> childI;
+        cin >> cl_num;
+        child2* ch2 = new child2(this->get_object_by_name(parentI),childI);
+        /*if(cl_num==2)
+            child2* ch2 = new child2(this->get_object_by_name(parentI),childI);
+        else if(cl_num==3)
+            child3* ch3 = new child3(this->get_object_by_name(parentI),childI);
+        else if(cl_num==4)
+            child4* ch4 = new child4(this->get_object_by_name(parentI),childI);
+        else if(cl_num==5)
+            child5* ch5 = new child5(this->get_object_by_name(parentI),childI);
+        else
+            child6* ch6 = new child6(this->get_object_by_name(parentI),childI);*/
     }
+
+   /* while(cin>>child>>readiness){
+    	this->get_object_by_name(child)->set_readiness(readiness);
+    }*/
 }
 
 int cl_application::exec_app() {
-    cout<<this->children[0]->get_name()<<endl;
-    this->children[0]->print_tree();
+    this->print_tree_ready();
     return 0;
 }
