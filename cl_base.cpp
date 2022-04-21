@@ -41,7 +41,7 @@ void cl_base::print_tree(int depth)
         i=1;
         cout<< this->get_name();
     }
-    for(i<this->children.size(); i++)
+    for(;i<this->children.size(); i++)
     {
         cout<<endl;
         for(int j=0; j<=depth; j++) cout<<"    ";
