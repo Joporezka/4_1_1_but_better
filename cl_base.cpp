@@ -56,20 +56,13 @@ void cl_base::print_tree_ready(int depth)
     int i=0;
     if(depth==0){
         i=1;
-        cout<< this->get_name();
-        if(this->readiness==0) cout<<" is not ready";
-        else  cout<<" is ready";
+        cout<< this->get_name()<<" "<<this->readiness;
     }
     for (; i < children.size(); i++)
     {
         cout<<endl;
         for(int j=0;j<=depth;j++) cout<<"    ";
-        cout<<this->children[i]->get_name();
-        if(this->children[i]->readiness==0){
-            cout<<" is not ready";
-        }else{
-            cout<<" is ready";
-        }
+        cout<<this->children[i]->get_name()<<" "<<this->children[i]->readiness;
         if(!children[i]->children.empty())
             children[i]->print_tree_ready(depth+1);
     }
@@ -104,27 +97,22 @@ void cl_base::set_parent(cl_base* parent) {
 cl_base *cl_base::get_parent() {
     return this->parent;
 }
-void cl_base::set_readiness(int data) {
-    if (data == 0) {
-        for (int i = 0; i < children.size(); i++) {
-            children[i]->set_readiness(0);
-        }
-    } else {
-        if (this->parent == nullptr) {
-            this->readiness = data;
+void cl_base::set_readiness(int data){
+    cl_base* ptr= this->parent;
+    if(ptr == nullptr){
+        this->readiness=data;
+        return;
+    }
+    while(ptr!=nullptr){
+        if(ptr->readiness==0){
+            this->readiness=0;
             return;
         }
-        cl_base *ptr = this;
-        while (ptr != nullptr) {
-            ptr = ptr->parent;
-            if (ptr->readiness == 0) {
-                this->readiness = 0;
-                return;
-            }
-
-        }
-        this->readiness = data;
+        ptr=ptr->parent;
     }
-
-
+    this->readiness=data;
 }
+
+
+
+
