@@ -6,7 +6,7 @@
 class cl_application: public cl_base{
     using cl_base::cl_base;
 public:
-    void bild_tree_objects();
+    int bild_tree_objects();
     int exec_app();
 };
 #endif 

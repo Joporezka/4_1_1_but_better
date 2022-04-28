@@ -18,7 +18,7 @@ string cl_base::get_name() {
 }
 
 
-cl_base* cl_base::get_object_by_name(string name) //получение объекта по имении в дереве иерархии
+cl_base* cl_base::get_object_by_name(string name, int condition) //получение объекта по имении в дереве иерархии
 {
     for (size_t i = 0; i < children.size(); i++) //поиск в векторе прямых наследников
     {
@@ -28,6 +28,9 @@ cl_base* cl_base::get_object_by_name(string name) //получение объе�
             return children[i];
         }
     }
+
+    if(condition==1) return nullptr;
+
     for (size_t i = 0; i <children.size(); i++) //поиск рекурсивно в наследниках наследников
     {
         if (children[i]->parent!=nullptr)
@@ -50,31 +53,32 @@ cl_base *cl_base::get_parent() {
 }
 
 //создано
-
+/*
 void cl_base::set_readiness(int data){
-    if(data==0){
-        for(int i=0;i<children.size();i++){
-            children[i]->set_readiness(0);
-        }
-    }else{
-        cl_base* ptr = this->parent;
-        if(ptr==nullptr){
-            this->readiness=data;
-            return;
-        }
+	if(data==0){
+		this->readiness=0;
+		for(int i=0;i<children.size();i++){
+			children[i]->set_readiness(0);
+		}
+	}else{
+		cl_base* ptr = this->parent;
+		if(ptr==nullptr){
+			this->readiness=data;
+			return;
+		}
 
-        while(ptr!=nullptr){
+		while(ptr!=nullptr){
 
-            if(ptr->readiness==0){
-                this->readiness=0;
-                return;
-            }
-            ptr=ptr->parent;
+			if(ptr->readiness==0){
+				this->readiness=0;
+				return;
+			}
+			ptr=ptr->parent;
 
-        }
-        this->readiness=data;
-    }
-}
+		}
+		this->readiness=data;
+	}
+}*/
 //обновлено
 void cl_base::print_tree(int depth)
 {
@@ -91,27 +95,27 @@ void cl_base::print_tree(int depth)
         if(children[i]->children.size()!=0) children[i]->print_tree(depth+1);
     }
 }
-
+/*
 void cl_base::print_tree_ready(int depth)
 {
-    int i=0;
-    if(depth==0){
-        i=1;
-        cout<< this->get_name();
-        if(this->readiness==0)
-            cout<<" is not ready";
-        else
-            cout<<" is ready";
-    }
-    for (; i < children.size(); i++)
-    {
-        cout<<endl;
-        for(int j=0;j<=depth;j++) cout<<"    ";
-        cout<<this->children[i]->get_name();
-        if(this->children[i]->readiness==0)
-            cout<<" is not ready";
-        else
-            cout<<" is ready";
-        if(children[i]->children.size()!=0) children[i]->print_tree_ready(depth+1);
-    }
-}
+	int i=0;
+	if(depth==0){
+		i=1;
+		cout<< this->get_name();
+		if(this->readiness==0)
+			cout<<" is not ready";
+		else
+			cout<<" is ready";
+	}
+	for (; i < children.size(); i++)
+	{
+		cout<<endl;
+		for(int j=0;j<=depth;j++) cout<<"    ";
+		cout<<this->children[i]->get_name();
+		if(this->children[i]->readiness==0)
+			cout<<" is not ready";
+		else
+			cout<<" is ready";
+		if(children[i]->children.size()!=0) children[i]->print_tree_ready(depth+1);
+	}
+}*/
