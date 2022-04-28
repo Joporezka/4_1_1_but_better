@@ -17,9 +17,9 @@ public:
     void set_parent(cl_base* parent);
     cl_base* get_parent();
     void print_tree(int depth=0);
-    //void print_tree_ready(int depth=0);
+    //void print_tree_ready(int depth=0); - DELETED
     cl_base* get_object_by_name(string name,int condition=0);//izmeneno
-    //void set_readiness(int data);
+    //void set_readiness(int data); - DELETED
 };
 
 #endif
