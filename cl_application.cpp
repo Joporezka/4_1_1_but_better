@@ -10,6 +10,20 @@
 using namespace std;
 
 
+/*
+ * test
+ root
+ / ob1 3
+ . ob2 3
+ ob2 ob4 5
+ /ob1 ob3 4
+ endtree
+ FIND //ob4
+ SET //ob4
+ FIND .
+ END
+ */
+
 int cl_application::bild_tree_objects() {
     string parent_path;
     string child;
@@ -27,9 +41,9 @@ int cl_application::bild_tree_objects() {
         if(parent_path=="endtree") break;
 
         string temp_obj = "";
-        if(parent_path == "/"){
+        if(parent_path == "/" and parent_path.length() == 1){ // / - from root
             parent = this;
-        }else if(parent_path[0]=='/' and parent_path[1]=='/'){
+        }else if(parent_path[0]=='/' and parent_path[1]=='/'){ // // - from root find by name
             for(int i=2;i<parent_path.length();i++)
                 temp_obj+=parent_path[i];
             parent = this->get_object_by_name(temp_obj);
@@ -37,36 +51,65 @@ int cl_application::bild_tree_objects() {
                 cout<<"The head object "<<parent_path<<" is not found";
                 return -1;
             }
-        }else{ // /01/02/..../0n
+        }else if(parent_path == "." and parent_path.length() == 1){ // . - get cur_object
+            parent = this->current;
+        }else if(parent_path[0]!='/' and parent_path.length() > 1) { // not abs path
             int cnt_objects=0;
-            for(int i=1;i<parent_path.length();i++){
-                if(parent_path[i]=='/'){
-                    if(cnt_objects==0){
-                        parent = this->get_object_by_name(temp_obj,1);
+            for(int i=0;i<parent_path.length();i++) {
+                if(parent_path[i] =='/' or i == parent_path.length()-1) {
+                    if(i==parent_path.length()-1) {
+                        temp_obj += parent_path[i];
+                    }
+                    if(cnt_objects == 0) {
+                        parent = this->get_object_by_name(temp_obj);
+                        if (parent == nullptr) {
+                            cout << "The head object " << parent_path << " is not found";
+                            return -1;
+                        }
                     }else{
-                        parent = parent->get_object_by_name(temp_obj,1);
+                        parent = parent->get_object_by_name(temp_obj);
+                        if (parent == nullptr) {
+                            cout << "The object " << temp_obj << " is not found";
+                            return -1;
+                        }
                     }
                     cnt_objects++;
-                    if(parent==nullptr){
-                        cout<<"The head object "<<temp_obj<<" is not found";
-                        return -1;
-                    }
-                    if(i!= parent_path.length()-1) temp_obj="";
                 }else{
-                    //get substr
-                    temp_obj+=parent_path[i];
+                    temp_obj += parent_path[i];
                 }
             }
-            if(cnt_objects==0)
-                parent = this->get_object_by_name(temp_obj,1);
-            else
-                parent = parent->get_object_by_name(temp_obj,1);
-            if(parent==nullptr){
-                cout<<"The head object "<<temp_obj<<" is not found";
-                return -1;
+
+        }else{ // /01/02/..../0n
+                int cnt_objects=0;
+                for(int i=1;i<parent_path.length();i++){
+                    if(parent_path[i]=='/'){
+                        if(cnt_objects==0){
+                            parent = this->get_object_by_name(temp_obj,1);
+                        }else{
+                            parent = parent->get_object_by_name(temp_obj,1);
+                        }
+                        cnt_objects++;
+                        if(parent==nullptr){
+                            cout<<"The head object "<<temp_obj<<" is not found";
+                            return -1;
+                        }
+                        if(i!= parent_path.length()-1) temp_obj="";
+                    }else{
+                        //get substr
+                        temp_obj+=parent_path[i];
+                    }
+                }
+                if(cnt_objects==0)
+                    parent = this->get_object_by_name(temp_obj,1);
+                else
+                    parent = parent->get_object_by_name(temp_obj,1);
+                if(parent==nullptr){
+                    cout<<"The head object "<<temp_obj<<" is not found";
+                    return -1;
+                }
+
             }
 
-        }
         cin >> child;
         cin >> cl_num;
         if(cl_num==2) child2* ch = new child2(parent,child);
