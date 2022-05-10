@@ -3,7 +3,10 @@
 #include "cl_base.h"
 
 class child6: public cl_base {
-    using cl_base::cl_base;
+public:
+    child6(cl_base*, string);
+    void signal(string&);
+    void handler(string&);
 };
 
 #endif

@@ -1,11 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "cl_application.h"
-/*
-o1
-o1 o2
-o1 o3
-o2 o4
-o5 o5
- */
 int main()
 {
     setlocale(LC_ALL, "ru");
