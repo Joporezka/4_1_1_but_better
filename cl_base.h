@@ -16,6 +16,7 @@ class cl_base{
 
 public:
     int readiness=DEBUG_MOD;
+    int n,m;
 
 
     typedef void ( cl_base :: * TYPE_SIGNAL ) ( string & );
@@ -59,6 +60,7 @@ public:
     void handler(string&);*/
 
     // ========== /signal ==========
+    vector<string> split_command(string s,string token = " ");
 };
 
 #endif

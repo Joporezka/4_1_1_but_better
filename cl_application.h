@@ -12,6 +12,7 @@ public:
     cl_application(cl_base*, string = "Default");
 
     int n_class=1;
+    string read_buffer;
 
     int bild_tree_objects();
     int exec_app();

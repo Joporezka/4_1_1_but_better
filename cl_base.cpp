@@ -61,10 +61,20 @@ cl_base *cl_base::get_parent() {
 
 void cl_base::set_readiness(int data){
     if(data==0){
-        this->readiness=0;
-        for(int i=0;i<children.size();i++){
-            children[i]->set_readiness(0);
+        if(this->parent!=nullptr){
+
+            this->readiness=0;
+            for(int i=0;i<children.size();i++){
+                children[i]->set_readiness(0);
+            }
+
+        }else{
+            this->readiness=0;
+            for(int i=1;i<children.size();i++){
+                children[i]->set_readiness(0);
+            }
         }
+
     }else{
         cl_base* ptr = this->parent;
         if(ptr==nullptr){
@@ -211,6 +221,22 @@ void cl_base::emit_signal(TYPE_SIGNAL p_signal, string& s_command){
             }
         }
     }
+}
+
+vector<string> cl_base::split_command(string s, string token){
+    vector<string> result;
+    while(s.size()){
+        int index = s.find(token);
+        if(index!=string::npos){
+            result.push_back(s.substr(0,index));
+            s=s.substr(index+token.size());
+            if(s.size()==0) result.push_back(s);
+        }else{
+            result.push_back(s);
+            s = "";
+        }
+    }
+    return result;
 }
 
 
